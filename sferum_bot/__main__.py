@@ -29,7 +29,7 @@ async def main() -> None:
             creds.pts,
         )
 
-    except KeyboardInterrupt:
+    except (asyncio.exceptions.CancelledError, KeyboardInterrupt):
         logger.info("Bot was stoped")
         await config.bot.close()
         await config.session.close()

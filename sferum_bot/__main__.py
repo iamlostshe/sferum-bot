@@ -48,7 +48,6 @@ async def main() -> None:
     try:
         # Creating an aiogram seesion object
         async with ClientSession() as session:
-
             # Any data
             user = await get_user_credentials(AUTH_COOKIE, session)
             access_token = user.access_token
@@ -66,9 +65,15 @@ async def main() -> None:
             # Run the main cycle
             await _main(
                 session,
-                creds.server, creds.key, creds.ts,
-                TG_CHAT_ID, VK_CHAT_ID, access_token,
-                AUTH_COOKIE, creds.pts, bot,
+                creds.server,
+                creds.key,
+                creds.ts,
+                TG_CHAT_ID,
+                VK_CHAT_ID,
+                access_token,
+                AUTH_COOKIE,
+                creds.pts,
+                bot,
             )
 
     except KeyboardInterrupt:

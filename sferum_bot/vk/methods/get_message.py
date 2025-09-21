@@ -7,15 +7,15 @@ from .consts import V
 
 
 async def get_message(
-        session: ClientSession,
-        access_token: str,
-        pts: int,
-    ) -> tuple[list, list, str]:
+    session: ClientSession,
+    access_token: str,
+    pts: int,
+) -> tuple[list, list, str]:
     """Get msg."""
     body = {
         "extended": 1,
         "pts": pts,
-        "fields":"id,first_name,last_name",
+        "fields": "id,first_name,last_name",
         "access_token": access_token,
     }
 
@@ -47,4 +47,4 @@ async def get_message(
         "items": req["response"]["messages"]["items"],
         "profiles": req["response"]["profiles"],
         "title": title,
-        }
+    }

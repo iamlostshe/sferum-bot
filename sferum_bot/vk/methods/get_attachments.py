@@ -11,7 +11,7 @@ async def get_attachments(session: ClientSession, access_token: str, pts: int) -
     body = {
         "extended": 1,
         "pts": pts,
-        "fields":"id,first_name,last_name",
+        "fields": "id,first_name,last_name",
         "access_token": access_token,
     }
 

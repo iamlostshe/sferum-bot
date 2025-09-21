@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from loguru import logger
 from aiogram import Bot
 from aiogram.types import InputMediaDocument, InputMediaPhoto
 
@@ -61,11 +60,12 @@ async def gen_tg_msg(msg: VkMessage) -> tuple[dict, callable]:
                     kwargs = {
                         i[0].type: i[0].media,
                         "caption": i[0].caption,
-                        }
+                    }
                     commands.append((kwargs, command))
     else:
         commands.append(({"text": text}, Bot.send_message))
     return commands
+
 
 async def send_message(
     bot: Bot,

@@ -2,6 +2,7 @@
 
 from aiogram import Bot
 
+
 async def send_error(
     bot: Bot,
     tg_chat_id: int,

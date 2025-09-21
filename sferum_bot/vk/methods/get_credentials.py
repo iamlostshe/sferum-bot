@@ -2,7 +2,6 @@
 
 from aiohttp import ClientSession
 from loguru import logger
-
 from vk.vk_types import ServerCredentials
 
 from .consts import LP_VERSION, V

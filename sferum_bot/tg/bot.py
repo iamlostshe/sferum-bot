@@ -18,6 +18,7 @@ if not TG_USER_ID:
 # Initializing dispatcher
 dp = Dispatcher()
 
+
 async def start_polling(bot: Bot) -> None:
     """Start polling function."""
     await dp.start_polling(bot)

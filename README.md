@@ -1,6 +1,4 @@
-# Sferum Bot от [@xKARASb](https://github.com/xKARASb)
-
-This `README` is also available on [English](https://github.com/xKARASb/SferumBot/blob/main/README_EN.md) <- click.
+# sferum-bot от [@xKARASb](https://github.com/xKARASb)
 
 ## Работает на
 
@@ -21,16 +19,18 @@ This `README` is also available on [English](https://github.com/xKARASb/SferumBo
 
 ## Как пользоваться?
 
-1. Клонируем репозиторий:
+### 1. Клонируем репозиторий:
 
 ``` sh
 git clone https://github.com/xKARASb/SferumBot.git
 cd SferumBot
 ```
 
-2. Заполняем поля в `.env.dist`:
+### 2. Скопируйте `.env.dist` и переименуйте его в `.env`.
 
-- `AUTH_COOKIE`
+### 3. Заполняем поля в `.env`:
+
+#### `AUTH_COOKIE`
 
 [Инструкция для `Microsoft Edge`](https://github.com/xKARASb/SferumBot/issues/9)
 
@@ -44,7 +44,7 @@ cd SferumBot
 
 Заполните поле в `.env.dist`.
 
-- `BOT_TOKEN`
+#### `BOT_TOKEN`
 
 Перейдите в [@BotFather](https://t.me/BotFather).
 
@@ -52,19 +52,13 @@ cd SferumBot
 
 Скопируйте токен и вставьте его в `.env.dist`.
 
-- `TG_USER_ID`
-
-Вы можете получить ваш id [в этом боте](https://t.me/username_to_id_bot).
-
-Скопируйте его и вставьте его в `.env.dist`.
-
-- `TG_CHAT_ID`
+#### `TG_CHAT_ID`
 
 Можно оставить пустым, если не собираетесь использовать бота в группе/канале.
 
-В настройках телеграм включите отображения id: `Настройки` > `Продвинутые настройки` > `Эксперементальные настройки` > `Show Peer IDs in profile`.
+В настройках Telegram включите отображения id: `Настройки` > `Продвинутые настройки` > `Эксперементальные настройки` > `Show Peer IDs in profile`.
 
-Запи
+Получите id чата и вставьте его в поле.
 
 > **ВАЖНО**
 >
@@ -74,7 +68,9 @@ cd SferumBot
 >
 > Чтобы пересылать сообщения в один из разделов супергруппы вы можете указать его id в `TG_TOPIC_ID`.
 
-- `VK_CHAT_ID`
+#### `VK_CHAT_IDS`
+
+> Если вы хотите получать уведомления из всех чатов, просто оставьте поле пустым.
 
 Получите id чата, открыв его в браузере:
 
@@ -85,72 +81,30 @@ https://web.vk.me/convo/{здесь нужный нам id}
 Вы можете записать чаты, из которых необходимо пересылать сообщения в `.env.dist` следующим образом:
 
 ```
-VK_CHAT_ID=200000015, 200000016
-VK_CHAT_ID=200000015,200000016
-VK_CHAT_ID=200000015
+VK_CHAT_IDS=200000015
+VK_CHAT_IDS=200000015,200000016
+VK_CHAT_IDS=200000015, 200000016
 ```
 
-3. Переименуйте `.env.dist` -> `.env`.
+### 4. Установка зависимостей и запуск:
 
-4. Установка зависимостей и запуск:
-
-<details>
-<summary>Через uv (рекомендуется)</summary>
-
-**Устанавливаем `uv` (если еще не установлен):**
-
-Linux:
+Установите `uv`:
 
 ``` bash
+# linux:
 curl -LsSf https://astral.sh/uv/install.sh | sh
-```
 
-Windows:
-
-``` bash
+# windows:
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-**Запускаем:**
+Запустите бота:
 
-``` sh
-uv run startup.py
+``` bash
+uv run -m sferum_bot
 ```
 
-</details>
-
-<details>
-<summary>Через requirements.txt</summary>
-
-1. Созаём и активируем виртуальное окружение:
-
-``` sh
-python3 -m venv venv
-. venv/bin/activate
-```
-
-> **ЗАМЕТКА**
->
-> Вторая команда для Windows выглядит следющим образом:
->
-> ```
-> .\venv\Scripts\Activate
-> ```
-
-2. Установка необходимых пакетов:
-
-``` sh
-pip install -r requirements.txt
-```
-
-3. Запуск:
-
-``` sh
-python3 startup.py
-```
-</details>
-
-# Обращение
+## Обращение
 
 Бот написан школьником, который развивается в сфере программирования. Так как мне самому было не удобно использовать сферум, а по мимо него ещё много других площадок, я решил централизировать всё в телеграмме, поэтому на свет появился этот бот.
 
@@ -159,11 +113,11 @@ python3 startup.py
 Если у вас есть какие-то пожелания или вы нашли проблему, пишите её в issues, так же можете мне написать в телеграмм.
 
 Вы можете поддержать проект любой суммой, я буду очень рад:
-    
+
 Тинькофф *2200701344983280*
-    
+
 Сбер *4817760241976004*
-    
+
 Получатель *Колос М.*
 
 ## Лицензия:

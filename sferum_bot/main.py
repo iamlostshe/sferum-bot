@@ -5,9 +5,9 @@ from aiogram import Bot
 from aiohttp import ClientSession
 from asyncio import sleep
 
-from vk.vk_types import EventMessage, Message
-from tg.methods import send_message, send_error
-from vk.methods import get_credentials, get_message, get_user_credentials
+from sferum_bot.vk.vk_types import EventMessage, Message
+from sferum_bot.tg.methods import send_message, send_error
+from sferum_bot.vk.methods import get_credentials, get_message, get_user_credentials
 
 
 async def main(

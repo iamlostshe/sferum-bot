@@ -11,8 +11,8 @@ from aiohttp import ClientSession
 from dotenv import load_dotenv
 from loguru import logger
 
-from main import main as _main
-from vk.methods import get_credentials, get_user_credentials
+from sferum_bot.main import main as _main
+from sferum_bot.vk.methods import get_credentials, get_user_credentials
 
 # Get and check the consts from .env
 load_dotenv()

@@ -4,8 +4,7 @@ version = "0.1.2"
 dependencies = [
     "aiogram==3.22.0",
     "loguru==0.7.3",
-    "python-dotenv==1.1.1",
-    "requests==2.32.5",
+    "pydantic-settings>=2.10.1",
 ]
 
 [tool.ruff]

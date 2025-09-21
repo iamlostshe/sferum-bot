@@ -1,6 +1,11 @@
 """Send msg to telegram."""
 
-from aiogram import Bot
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from aiogram import Bot
 
 
 async def send_error(

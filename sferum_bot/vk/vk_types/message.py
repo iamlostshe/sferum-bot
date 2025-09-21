@@ -3,14 +3,12 @@
 from __future__ import annotations
 
 import re
-from typing import TYPE_CHECKING, Self
+from typing import Self
 
-import requests
 from aiogram.types import BufferedInputFile
 from loguru import logger
 
-if TYPE_CHECKING:
-    from aiohttp import ClientSession
+from sferum_bot import config
 
 REFACTOR_REGEX = r"(?<!\\)(\\|_|\*|\[|\]|\(|\)|\~|`|>|#|\+|-|=|\||\{|\}|\.|\!)"
 
@@ -20,7 +18,6 @@ class Message:
 
     async def async_init(
         self: Self,
-        session: ClientSession,
         date,
         from_id: int,
         text: str,
@@ -31,7 +28,7 @@ class Message:
         """Just async __init__."""
         self.media = []
 
-        self.session = session
+        self.session = config.session
         self.__dict__.update(kwargs)
         self.date = date
         self.sender_id = from_id
@@ -87,21 +84,21 @@ class Message:
 
     @staticmethod
     async def __get_source_link(attach: dict) -> str:
-        req = requests.get(attach["url"])  # noqa: ASYNC210, S113
-        logger.info(req.headers.get("Content-Type"))
-        if req.headers.get("Content-Type") == "text/html; charset=windows-1251":
-            return attach["url"], "video"
-        if req.headers.get("Content-Type").split("/")[0] in ("application", "text"):
-            if attach["size"] < 52428800:
+        async with config.session.get(attach["url"]) as r:
+            logger.info(r.headers.get("Content-Type"))
+            if r.headers.get("Content-Type") == "text/html; charset=windows-1251":
+                return attach["url"], "video"
+            if r.headers.get("Content-Type").split("/")[0] in ("application", "text"):
+                if attach["size"] < 52428800:
+                    return BufferedInputFile(
+                        r.content,
+                        filename=attach["title"],
+                    ), "doc"
                 return BufferedInputFile(
-                    req.content,
-                    filename=attach["title"],
+                    "File is too large to upload to telegram",
+                    filename="file is too large.txt",
                 ), "doc"
-            return BufferedInputFile(
-                "File is too large to upload to telegram",
-                filename="file is too large.txt",
-            ), "doc"
-        return attach["url"], "doc"
+            return attach["url"], "doc"
 
     @staticmethod
     async def __get_max_size_photo_url(attach: dict) -> str:

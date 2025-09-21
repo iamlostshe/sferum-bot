@@ -1,32 +1,28 @@
 """Get msg."""
 
-from aiohttp import ClientSession
 from loguru import logger
+
+from sferum_bot import config
 
 from .consts import V
 
 
 async def get_message(
-    session: ClientSession,
     access_token: str,
     pts: int,
 ) -> tuple[list, list, str]:
     """Get msg."""
-    body = {
-        "extended": 1,
-        "pts": pts,
-        "fields": "id,first_name,last_name",
-        "access_token": access_token,
-    }
-
-    query = {
-        "v": V,
-    }
-
-    async with session.post(
+    async with config.session.post(
         "https://api.vk.me/method/messages.getLongPollHistory",
-        data=body,
-        params=query,
+        data={
+            "extended": 1,
+            "pts": pts,
+            "fields": "id,first_name,last_name",
+            "access_token": access_token,
+        },
+        params={
+            "v": V,
+        },
     ) as r:
         req = await r.json()
 

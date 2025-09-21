@@ -2,27 +2,22 @@
 
 from asyncio import sleep
 
-from aiogram import Bot
-from aiohttp import ClientSession
 from loguru import logger
 
+from sferum_bot import config
 from sferum_bot.tg.methods import send_error, send_message
 from sferum_bot.vk.methods import get_credentials, get_message, get_user_credentials
 from sferum_bot.vk.vk_types import EventMessage, Message
 
 
 async def main(
-    session: ClientSession,
     server: str,
     key: str,
     ts: int,
-    tg_chat_id: str,
-    vk_chat_ids: str,
     access_token: str,
-    cookie: str,
     pts: int,
-    bot: Bot,
-    tg_topic_id=None,
+    # TODO(@iamlostshe): Допилить работу в супергруппах  # noqa: FIX002, TD003
+    # tg_topic_id=None,  # noqa: ERA001
 ) -> None:
     """Cycle function."""
     data = {
@@ -35,7 +30,7 @@ async def main(
     while True:
         await sleep(0.2)
         try:
-            async with session.post(f"https://{server}", data=data) as r:
+            async with config.session.post(f"https://{server}", data=data) as r:
                 req = await r.json()
 
             logger.debug(req)
@@ -48,20 +43,21 @@ async def main(
                     raw_msg = EventMessage(*event)
                     logger.info(f"[MAIN] raw_msg: {raw_msg}")
 
-                    if str(raw_msg.chat_id) in "".join(vk_chat_ids.split()).split(","):
+                    if (
+                        config.config.vk_chat_ids == "all"
+                        or str(raw_msg.chat_id) in config.config.vk_chat_ids
+                    ):
                         logger.debug("[MAIN] allowed chat")
 
-                        _message = await get_message(session, access_token, pts)
+                        _message = await get_message(access_token, pts)
 
                         if _message.get("error"):
-                            access_token = (
-                                await get_user_credentials(cookie, session)
-                            ).access_token
-                            credentials = await get_credentials(access_token, session)
+                            access_token = (await get_user_credentials()).access_token
+                            credentials = await get_credentials(access_token)
                             data["ts"] = credentials.ts
                             data["key"] = credentials.key
 
-                            _message = await get_message(session, access_token, pts)
+                            _message = await get_message(access_token, pts)
 
                             logger.error(_message)
                         else:
@@ -77,12 +73,17 @@ async def main(
 
                         msg = Message()
                         await msg.async_init(
-                            session,
                             **message[-1],
                             profiles=profile,
                             chat_title=chat_title,
                         )
-                        await send_message(bot, msg, tg_chat_id, tg_topic_id)
+                        await send_message(
+                            config.bot,
+                            msg,
+                            config.config.tg_chat_id,
+                            # TODO(@iamlostshe): Допилить работу в супергруппах  # noqa: E501, FIX002, TD003
+                            tg_topic_id=None,
+                        )
                     else:
                         pts += 1
 
@@ -92,12 +93,14 @@ async def main(
                 data["ts"] = req["ts"]
 
             elif is_failed == 2:
-                access_token = (
-                    await get_user_credentials(cookie, session)
-                ).access_token
-                credentials = await get_credentials(access_token, session)
+                access_token = (await get_user_credentials()).access_token
+                credentials = await get_credentials(access_token)
                 data["ts"] = credentials.ts
                 data["key"] = credentials.key
         except Exception as e:
-            await send_error(bot, tg_chat_id, tg_topic_id)
+            await send_error(
+                config.bot,
+                config.config.tg_chat_id,
+                config.config.tg_topic_id,
+            )
             logger.exception(e)

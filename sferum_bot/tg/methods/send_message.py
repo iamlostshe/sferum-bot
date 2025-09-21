@@ -71,7 +71,7 @@ async def send_message(
     bot: Bot,
     msg: VkMessage,
     tg_chat_id: int,
-    tg_topic_id: int | None = None,
+    tg_topic_id: str | None = None,
 ) -> None:
     """Send message to telegram."""
     commands = await gen_tg_msg(msg)

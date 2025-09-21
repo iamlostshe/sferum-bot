@@ -25,6 +25,7 @@ class Config(BaseSettings):
     bot_token: str
     tg_chat_id: str | None
     vk_chat_ids: str
+    tg_topic_id: str | None
 
 
 # Препарируем данные из конфига
@@ -36,6 +37,9 @@ elif config.vk_chat_ids != "all":
     config.vk_chat_ids = "".join(
         config.vk_chat_ids.split(),
     ).split(",")
+
+if not config.tg_topic_id:
+    config.tg_topic_id = None
 
 # Инициализируем бота
 bot = Bot(

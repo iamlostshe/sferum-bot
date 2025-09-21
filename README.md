@@ -84,7 +84,7 @@ cd SferumBot
                 <blockquote>Дайте боту права администратора в группе/канале.</blockquote>
             </p>
             <p>
-                <blockquote>[Не работает] Чтобы пересылать сообщения в один из разделов супергруппы вы можете указать его id в <code>TG_TOPIC_ID</code>.</blockquote>
+                <blockquote>Чтобы пересылать сообщения в один из разделов супергруппы вы можете указать его id в <code>TG_TOPIC_ID</code>.</blockquote>
             </p>
         </td>
     </tr>

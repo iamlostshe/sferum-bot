@@ -1,5 +1,7 @@
 """Main cycle module."""
 
+from __future__ import annotations
+
 from asyncio import sleep
 
 from loguru import logger
@@ -16,8 +18,7 @@ async def main(
     ts: int,
     access_token: str,
     pts: int,
-    # TODO(@iamlostshe): Допилить работу в супергруппах  # noqa: FIX002, TD003
-    # tg_topic_id=None,  # noqa: ERA001
+    tg_topic_id: str | None = None,
 ) -> None:
     """Cycle function."""
     data = {
@@ -81,8 +82,7 @@ async def main(
                             config.bot,
                             msg,
                             config.config.tg_chat_id,
-                            # TODO(@iamlostshe): Допилить работу в супергруппах  # noqa: E501, FIX002, TD003
-                            tg_topic_id=None,
+                            tg_topic_id,
                         )
                     else:
                         pts += 1

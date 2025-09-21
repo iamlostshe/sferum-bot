@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 async def send_error(
     bot: Bot,
     tg_chat_id: int,
-    tg_topic_id: int | None = None,
+    tg_topic_id: str | None = None,
 ) -> None:
     """Send error notify to telegram."""
     await bot.send_message(

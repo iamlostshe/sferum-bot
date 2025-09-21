@@ -2,17 +2,20 @@
 
 from __future__ import annotations
 
+import aiohttp
 from aiogram import Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiohttp import ClientSession
 from pydantic_settings import BaseSettings
 
 
 async def init_session() -> None:
     """Инициализация сессии aiohttp."""
     global session  # noqa: PLW0603
-    session = ClientSession()
+    session = aiohttp.ClientSession(
+        trust_env=True,
+        connector=aiohttp.TCPConnector(ssl=False),
+    )
 
 
 class Config(BaseSettings):

@@ -2,7 +2,7 @@
 name = "sferum-bot"
 version = "0.1.2"
 dependencies = [
-    "aiogram==3.22.0",
+    "aiogram==3.23.0",
     "loguru==0.7.3",
     "pydantic-settings>=2.10.1",
 ]
